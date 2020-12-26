@@ -1,0 +1,48 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>苏州银行</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+</style>
+
+<body>
+  <div style="width:100%;height: 100%;background: rgba(0,0,0,0.85);position: fixed;top:0;z-index: 3;" id="WXShadow">
+    <img src="https://szbank-1257199830.cos.ap-nanjing.myqcloud.com/512.png" style="position: fixed;top: 4rem;right: 5.5rem;width:25%;">
+    <div style="font-size: 32px;color: #FFFFFF;position: fixed;top:17rem;width: 100%;text-align: center;">
+      请在外部浏览器中打开
+    </div>
+  </div>
+</body>
+<script>
+  //移动端的浏览器版本都比较高，可以监听DOMContentLoaded，而不是load，load会相对慢一点点，具体按事件使用情况而定。
+  document.addEventListener("DOMContentLoaded", function () {
+    var USER_Agent = navigator.userAgent;
+    var MOBILE_IOS = /(iPhone|iPad|iPod|iOS)/i;
+    var MOBILE_Android = /(Android)/i;
+    var WX = /(micromessenger)/i;
+
+    if (WX.test(USER_Agent)) {
+      //如果在微信中打开则只显示一个提示用户的罩层
+      return;
+    } else if (MOBILE_IOS.test(USER_Agent)) {
+      document.getElementById("WXShadow").style.display = "none";
+      window.location.href = "itms-services://?action=download-manifest&url=https://szbank-1257199830.cos.ap-nanjing.myqcloud.com/manifest.plist"//苹果app跳转的协议
+    } else if (MOBILE_Android.test(USER_Agent)) {
+      document.getElementById("WXShadow").style.display = "none";
+      window.location.href = "https://szbank-1257199830.cos.ap-nanjing.myqcloud.com/12.25_5.0.6_caordova_pro-release_signed.apk"//安卓app跳转的协议
+    }
+    //如果没有唤起app则3秒后会跳转到下载地址，反之则不会跳转到下载地址。
+    setTimeout(function () {
+        alert("请您点击安装并返回手机桌面查看安装进度")
+    },2000);
+  });
+</script>
+
+</html>
